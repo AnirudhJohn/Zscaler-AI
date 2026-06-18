@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zscaler AI Security Platform — Full Module Map</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0b0f1a;
+    color: #e2e8f0;
+    padding: 28px 24px;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: 22px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.3px; }
+  .header p  { font-size: 12.5px; color: #64748b; margin-top: 5px; }
+  .header .pills { display: flex; justify-content: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .pill { font-size: 10.5px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .pill-blue   { background: #1e3a5f; color: #60a5fa; border: 1px solid #1d4ed855; }
+  .pill-teal   { background: #0f3d36; color: #2dd4bf; border: 1px solid #0d948855; }
+  .pill-orange { background: #3d2008; color: #fb923c; border: 1px solid #c2410c55; }
+  .pill-purple { background: #2d1b4e; color: #a78bfa; border: 1px solid #7c3aed55; }
+  .pill-pink   { background: #380d26; color: #f472b6; border: 1px solid #be185d55; }
+
+  /* ── LAYOUT ── */
+  .grid   { display: grid; gap: 16px; }
+  .cols2  { grid-template-columns: 1fr 1fr; }
+  .cols3  { grid-template-columns: 1fr 1fr 1fr; }
+  .full   { grid-column: 1 / -1; }
+  @media (max-width: 900px) { .cols2, .cols3 { grid-template-columns: 1fr; } }
+
+  /* ── SECTION CARDS ── */
+  .section {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid;
+    transition: box-shadow .2s;
+  }
+  .section:hover { box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 8px 32px rgba(0,0,0,.4); }
+
+  .s-teal   { background: #081e1b; border-color: #0d9488; }
+  .s-purple { background: #13092a; border-color: #7c3aed; }
+  .s-orange { background: #180d02; border-color: #c2410c; }
+  .s-blue   { background: #080f20; border-color: #1d4ed8; }
+  .s-pink   { background: #17060f; border-color: #be185d; }
+  .s-gray   { background: #0d1117; border-color: #334155; }
+
+  .sec-head {
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .sh-teal   { background: #0f3d36; }
+  .sh-purple { background: #2d1b4e; }
+  .sh-orange { background: #3d2008; }
+  .sh-blue   { background: #1e3a5f; }
+  .sh-pink   { background: #380d26; }
+  .sh-gray   { background: #1a2030; }
+
+  .sec-icon  { font-size: 20px; }
+  .sec-title { font-size: 13.5px; font-weight: 700; flex: 1; }
+  .sec-badge {
+    font-size: 9.5px; font-weight: 700; padding: 2px 8px;
+    border-radius: 20px; letter-spacing: .04em; white-space: nowrap;
+  }
+  .sb-teal   { background: #0d9488; color: #ccfbf1; }
+  .sb-purple { background: #7c3aed; color: #ede9fe; }
+  .sb-orange { background: #c2410c; color: #fed7aa; }
+  .sb-blue   { background: #1d4ed8; color: #bfdbfe; }
+  .sb-pink   { background: #be185d; color: #fce7f3; }
+  .sb-gray   { background: #334155; color: #e2e8f0; }
+
+  .sec-body { padding: 14px 16px 16px; }
+
+  /* ── MODULE BLOCKS ── */
+  .mod { margin-bottom: 13px; }
+  .mod:last-child { margin-bottom: 0; }
+  .mod-title {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .07em; margin-bottom: 5px; display: flex; align-items: center; gap: 6px;
+  }
+  .t-teal   { color: #2dd4bf; }
+  .t-purple { color: #a78bfa; }
+  .t-orange { color: #fb923c; }
+  .t-blue   { color: #60a5fa; }
+  .t-pink   { color: #f472b6; }
+  .t-gray   { color: #94a3b8; }
+
+  .items { display: flex; flex-direction: column; gap: 3px; }
+  .item {
+    font-size: 12px; color: #cbd5e1; padding: 4px 9px;
+    background: rgba(255,255,255,.04); border-radius: 5px; line-height: 1.45;
+    border-left: 2px solid rgba(255,255,255,.06);
+  }
+  .item b { color: #f1f5f9; }
+
+  .divider { height: 1px; background: rgba(255,255,255,.06); margin: 11px 0; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 1px 5px; border-radius: 3px; margin-left: 4px;
+    vertical-align: middle;
+  }
+  .b-new  { background: #16a34a22; color: #4ade80; border: 1px solid #16a34a55; }
+  .b-cloud{ background: #0369a122; color: #38bdf8; border: 1px solid #0369a155; }
+  .b-key  { background: #92400e22; color: #fbbf24; border: 1px solid #92400e55; }
+
+  /* ── INNER GRID ── */
+  .ig2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ig3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 900px) { .ig2, .ig3 { grid-template-columns: 1fr; } }
+
+  /* ── LIFECYCLE BAR ── */
+  .lifecycle {
+    display: flex; align-items: center; gap: 0;
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+    border-radius: 8px; overflow: hidden; margin-bottom: 18px;
+  }
+  .lc-step {
+    flex: 1; text-align: center; padding: 9px 6px;
+    font-size: 11px; font-weight: 600; color: #94a3b8;
+    border-right: 1px solid rgba(255,255,255,.07);
+    position: relative;
+  }
+  .lc-step:last-child { border-right: none; }
+  .lc-step.active { color: #f1f5f9; background: rgba(255,255,255,.05); }
+  .lc-step .lc-icon { font-size: 16px; display: block; margin-bottom: 2px; }
+  .lc-step .lc-label { font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── FOOTER NOTE ── */
+  .footnote {
+    text-align: center; font-size: 11px; color: #475569;
+    margin-top: 22px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.05);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>🔐 Zscaler AI Security Platform — Complete Module Map</h1>
+  <p>Admin portal: ai-console.zscaler.com &nbsp;·&nbsp; Platform brand: AI Protect &nbsp;·&nbsp; Launched Jan 2026, Expanded Jun 2026 (Zenith Live)</p>
+  <div class="pills">
+    <span class="pill pill-teal">Pillar 1 · AI Asset Management (SPM)</span>
+    <span class="pill pill-purple">Pillar 2 · Secure Access to AI (AI Guard)</span>
+    <span class="pill pill-orange">Pillar 3 · Secure AI Infra &amp; Apps (Red Teaming)</span>
+    <span class="pill pill-pink">New · Agentic AI Security (Jun 2026)</span>
+    <span class="pill pill-blue">Cross-cutting · Governance &amp; Compliance</span>
+  </div>
+</div>
+
+<!-- LIFECYCLE BAR -->
+<div class="lifecycle">
+  <div class="lc-step active"><span class="lc-icon">🔍</span><span class="lc-label">Discover</span></div>
+  <div class="lc-step active"><span class="lc-icon">📊</span><span class="lc-label">Inventory &amp; Risk</span></div>
+  <div class="lc-step active"><span class="lc-icon">🚦</span><span class="lc-label">Access Control</span></div>
+  <div class="lc-step active"><span class="lc-icon">🛡</span><span class="lc-label">Runtime Inspect</span></div>
+  <div class="lc-step active"><span class="lc-icon">🎯</span><span class="lc-label">Red Team &amp; Harden</span></div>
+  <div class="lc-step active"><span class="lc-icon">⚖️</span><span class="lc-label">Govern &amp; Comply</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PILLAR 1 — AI INFRASTRUCTURE / ASSET MANAGEMENT
+════════════════════════════════════════════════════ -->
+<div class="section s-teal" style="margin-bottom:16px;">
+  <div class="sec-head sh-teal">
+    <span class="sec-icon">🗂</span>
+    <span class="sec-title">PILLAR 1 &nbsp;·&nbsp; AI Infrastructure — AI Asset Management &amp; SPM</span>
+    <span class="sec-badge sb-teal">CLOUD-NATIVE DISCOVERY · POSTURE MGMT</span>
+  </div>
+  <div class="sec-body">
+
+    <!-- AI ASSETS ROW -->
+    <div class="ig3">
+
+      <div class="mod">
+        <div class="mod-title t-teal">🧠 AI Assets — Models</div>
+        <div class="items">
+          <div class="item">Full inventory of AI/LLM models discovered across cloud infra</div>
+          <div class="item"><b>Per model:</b> publisher, country of origin, licensing terms, risk score</div>
+          <div class="item"><b>Lifecycle timeline:</b> discovery → deployment → monitoring → updates</div>
+          <div class="item"><b>Attack path graph:</b> how the model can be compromised (IAM, public exposure, malware, CVEs)</div>
+          <div class="item">Model Scan Findings — active vulnerability results</div>
+          <div class="item"><b>Status:</b> Sanctioned / Unsanctioned / Pending Review</div>
+          <div class="item">Platforms: Amazon Bedrock, Azure Foundry AI, Google Vertex AI, Hugging Face, Ollama</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-teal">🔌 AI Assets — MCP Servers <span class="badge b-new">NEW Jun 2026</span></div>
+        <div class="items">
+          <div class="item">Centralized inventory of all MCP server instances (VMs, containers, etc.)</div>
+          <div class="item"><b>Capabilities flagged:</b> file system access, network access, code execution</div>
+          <div class="item"><b>Risk score:</b> Critical / High / Medium / Low (blast radius if compromised)</div>
+          <div class="item"><b>Status:</b> Sanctioned / Unsanctioned / Pending Review</div>
+          <div class="item"><b>Connection graph:</b> MCP ↔ client ↔ tools ↔ prompts ↔ APIs ↔ filesystem ↔ code repo</div>
+          <div class="item"><b>Tool-level detail:</b> name, description, parameters, file/network access per tool</div>
+          <div class="item">Attack path visualization with red-warning icons on vulnerable nodes</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-teal">🤖 AI Assets — Agents <span class="badge b-new">NEW Jun 2026</span></div>
+        <div class="items">
+          <div class="item">Inventory of all AI agents discovered across the environment</div>
+          <div class="item">Tracks ephemeral identities (agents that spawn sub-agents)</div>
+          <div class="item">Access path mapping — what data/systems each agent can reach</div>
+          <div class="item">Agentic codebase scanning — uncovers risks in agent source code</div>
+          <div class="item">Governance status (sanctioned / unsanctioned / pending) per agent</div>
+          <div class="item">Agent Registry integration with AI Broker product</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- AI RESOURCES + POSTURE POLICIES -->
+    <div class="ig3">
+
+      <div class="mod">
+        <div class="mod-title t-teal">📦 AI Resources — Software Libraries</div>
+        <div class="items">
+          <div class="item">Inventory of all AI/ML libraries in use across infra</div>
+          <div class="item">Covers: Hugging Face, PyTorch, TensorFlow, LangChain, LlamaIndex, etc.</div>
+          <div class="item">CVE and vulnerability mapping per library version</div>
+          <div class="item">Supply chain risk: country of origin, maintainer, license type</div>
+          <div class="item">Flags unsupported or end-of-life library versions</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-teal">🗄 AI Resources — Data Stores</div>
+        <div class="items">
+          <div class="item">Discovers all data connected to AI models (S3 buckets, blob storage, vector DBs, RAGs)</div>
+          <div class="item">Auto-classification: PII, PHI, IP, credentials, source code in training data</div>
+          <div class="item"><b>Data lineage:</b> which model trains on which data, and what's exposed</div>
+          <div class="item">Overprivileged access detection on training datasets</div>
+          <div class="item">Data poisoning risk assessment</div>
+          <div class="item">Revokes access from overprivileged users (internal + external)</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-teal">📋 AI Posture Policies (SPM Rule Engine)</div>
+        <div class="items">
+          <div class="item">Prebuilt + custom policies per threat category</div>
+          <div class="item"><b>Threat categories:</b> misconfiguration, data exposure, excessive permissions, injection risk, supply chain risk</div>
+          <div class="item">Integrates 100+ DLP dictionaries: PII, PHI, PCI, source code, credentials</div>
+          <div class="item">Data Sensitivity Settings — which DLP engines are active</div>
+          <div class="item">Guided remediation: step-by-step fix instructions per violation</div>
+          <div class="item"><b>Framework alignment:</b> NIST AI RMF 600-1, EU AI Act, HIPAA, GDPR, ISO 42001</div>
+          <div class="item">Real-time alerts on configuration drift</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CLOUD ONBOARDING + MONITORING -->
+    <div class="ig2">
+
+      <div class="mod">
+        <div class="mod-title t-teal">☁️ Cloud Account Onboarding</div>
+        <div class="items">
+          <div class="item"><b>AWS:</b> IAM role-based scanner, Orchestrator + Monitoring CloudFormation templates, Org-level tree discovery</div>
+          <div class="item">Supported IAM condition keys and operators documented</div>
+          <div class="item"><b>Azure:</b> Foundry AI native integration</div>
+          <div class="item"><b>Google:</b> Vertex AI native integration</div>
+          <div class="item"><b>Unmanaged:</b> Hugging Face + Ollama discovery (self-hosted, local)</div>
+          <div class="item">Scanner instance management per cloud account</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-teal">🔬 Monitoring &amp; Investigation</div>
+        <div class="items">
+          <div class="item"><b>Dashboard:</b> AI security posture overview — risk by severity, issue counts, model scan summary, compliance snapshot</div>
+          <div class="item"><b>Usage Insights:</b> GenAI app usage by user/dept/geo, shadow AI discovery, CXO-level reporting</div>
+          <div class="item"><b>Issues View:</b> All policy violations in one list, status tracking (Open/In Progress/Resolved), ITSM export to Jira / ServiceNow</div>
+          <div class="item"><b>Model Scan Findings:</b> CVEs per model artifact and dependency, remediation guidance</div>
+          <div class="item"><b>Investigation (Query Builder):</b> Custom queries across all AI asset and policy data — "Which agents touched this data store?"</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PILLAR 2 — SECURE ACCESS TO AI (AI GUARD)
+════════════════════════════════════════════════════ -->
+<div class="section s-purple" style="margin-bottom:16px;">
+  <div class="sec-head sh-purple">
+    <span class="sec-icon">🛡</span>
+    <span class="sec-title">PILLAR 2 &nbsp;·&nbsp; Secure Access to AI — AI Guard (Inline Proxy + DaaS API)</span>
+    <span class="sec-badge sb-purple">ZIA LAYER · USER-FACING &amp; INTERNAL APPS</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="ig3">
+
+      <div class="mod">
+        <div class="mod-title t-purple">📱 AI Applications Registry</div>
+        <div class="items">
+          <div class="item">Register every GenAI app AI Guard manages</div>
+          <div class="item"><b>250+ supported apps</b> with full prompt extraction <span class="badge b-new">expanded Jun 2026</span></div>
+          <div class="item">ChatGPT, Copilot, Gemini, Claude, Perplexity, Midjourney, etc.</div>
+          <div class="item">Proxy mode (inline) vs. DaaS mode (API) per app</div>
+          <div class="item">Application Groups for bulk policy binding</div>
+          <div class="item">Anthropic Compliance API + OpenAI Compliance API <span class="badge b-new">NEW</span></div>
+          <div class="item">Full conversational view — entire thread context, not just single turn <span class="badge b-new">NEW</span></div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-purple">🔑 LLM Providers &amp; Credentials <small>(Proxy mode only)</small></div>
+        <div class="items">
+          <div class="item">Configure upstream LLM providers AI Guard proxies to</div>
+          <div class="item"><b>Supported:</b> OpenAI, Anthropic, Azure OpenAI, AWS Bedrock (standard + Unified + Agent), Google Gemini, Google Vertex AI</div>
+          <div class="item">Credential management: API key, expiry date, provider binding</div>
+          <div class="item">Public vs. private deployment flag</div>
+          <div class="item">AI Guard sits in the trust chain — it holds the API keys</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-purple">🧪 Policy Configurations — 18+ Detectors</div>
+        <div class="items">
+          <div class="item"><b>Prompt Injection</b> — adversarial inputs to hijack LLM behavior</div>
+          <div class="item"><b>Jailbreak Protection</b> — bypass safety guidelines</div>
+          <div class="item"><b>PII / PHI / PCI</b> — sensitive data in prompts or responses</div>
+          <div class="item"><b>Source Code / IP / Secrets</b> — credentials, keys, proprietary code</div>
+          <div class="item"><b>Toxicity</b> — harmful, abusive language</div>
+          <div class="item"><b>Malicious URLs</b> — dangerous links in prompts or responses</div>
+          <div class="item"><b>Competitor Mention</b> — blocks competitor references</div>
+          <div class="item"><b>Finance / Legal Advice</b> — actionable vs. neutral information</div>
+          <div class="item"><b>Language Enforcement</b> — approved language list only</div>
+          <div class="item"><b>Off-topic / Gibberish / Refusal</b> — scope and quality control</div>
+          <div class="item"><b>Intent-based multi-turn guardrails</b> — context across a conversation <span class="badge b-new">NEW</span></div>
+          <div class="item"><b>Actions per detector:</b> Allow / Block / Detect (warn-only)</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-purple">🔗 Policy Control (Binding Layer)</div>
+        <div class="items">
+          <div class="item">Separate object from Policy Configuration — the enforcement binding</div>
+          <div class="item"><b>User policy control:</b> match by LLM provider + user/group</div>
+          <div class="item"><b>App policy control:</b> match by app, custom headers, source IP</div>
+          <div class="item">Rule order matters — processed top-to-bottom</div>
+          <div class="item">Enable/disable per rule without deleting it</div>
+          <div class="item">At least one match criterion required per rule</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-purple">🌐 ZIA Proxy-Chain Integration (Inline Mode)</div>
+        <div class="items">
+          <div class="item">ZCC on endpoint → ZIA → proxy chain → AI Guard → LLM</div>
+          <div class="item">AI Guard proxy endpoint: <b>forward.zseclipse.net:9443</b></div>
+          <div class="item">AI Guard CA cert uploaded to ZIA as proxy-chain root</div>
+          <div class="item">QUIC protocol must be blocked (firewall rule) to prevent bypass</div>
+          <div class="item">Wildcard FQDN destination groups + Forwarding Control rules per AI domain</div>
+          <div class="item">Supported app/domain list — last updated Apr 14, 2026</div>
+          <div class="item">Fail-closed proxy config recommended</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-purple">⚙️ DaaS API Mode (No Proxy)</div>
+        <div class="items">
+          <div class="item">App calls AI Guard API directly — no inline proxy</div>
+          <div class="item">API: <b>api.&lt;cloud&gt;.zseclipse.net/v1/detection/execute-policy</b></div>
+          <div class="item">Python SDK: <b>execute_policy(content, direction, policy_id)</b></div>
+          <div class="item">Direction: <b>IN</b> (prompt before LLM) · <b>OUT</b> (response before user)</div>
+          <div class="item"><b>Gateway integrations:</b> LiteLLM, Portkey, Kong, Azure APIM, Apigee, NeMo</div>
+          <div class="item"><b>IDE integrations:</b> Claude Code, Cursor, Cline, Windsurf</div>
+          <div class="item"><b>CI/CD:</b> GitHub Actions, Jenkins — gate releases on pass/fail</div>
+          <div class="item"><b>Workflow:</b> n8n, TrueFoundry — prompt+response scan in automation</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="ig2">
+      <div class="mod">
+        <div class="mod-title t-purple">📈 Dashboard, Insights &amp; Usage</div>
+        <div class="items">
+          <div class="item"><b>Dashboard:</b> Per-transaction log — user, app, LLM, detector fired, action, latency, prompt detail. 90-day window.</div>
+          <div class="item"><b>Insights:</b> Blocked counts, token usage, top detectors, PII categories, trends over time, security posture score</div>
+          <div class="item"><b>Usage:</b> Prompt/response token volume per app and per user</div>
+          <div class="item"><b>Policy Testing:</b> Test a prompt against a policy before deploying to prod</div>
+        </div>
+      </div>
+      <div class="mod">
+        <div class="mod-title t-purple">⚙️ Tenant Settings &amp; RBAC</div>
+        <div class="items">
+          <div class="item"><b>Deployment mode:</b> Proxy or DaaS toggle at tenant level</div>
+          <div class="item"><b>Prompt/response storage:</b> 90-day opt-in retention</div>
+          <div class="item"><b>Encryption:</b> Customer-managed KMS key (AWS currently supported)</div>
+          <div class="item"><b>Network ACL:</b> Restrict admin access by IPv4 CIDR</div>
+          <div class="item"><b>RBAC roles:</b> Viewer / Editor / Administrator (custom templates via ZIdentity)</div>
+          <div class="item"><b>Log export:</b> Splunk HEC, CrowdStrike + S3, AWS S3, ADX Event Hub</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PILLAR 3 — SECURE AI INFRA & APPS (RED TEAMING)
+════════════════════════════════════════════════════ -->
+<div class="section s-orange" style="margin-bottom:16px;">
+  <div class="sec-head sh-orange">
+    <span class="sec-icon">🎯</span>
+    <span class="sec-title">PILLAR 3 &nbsp;·&nbsp; Secure AI Infrastructure &amp; Apps — Red Teaming (SPLX)</span>
+    <span class="sec-badge sb-orange">APPSEC / DEV TEAMS · SHIFT-LEFT</span>
+  </div>
+  <div class="sec-body">
+
+    <div class="ig2">
+
+      <div class="mod">
+        <div class="mod-title t-orange">⚔️ Automated Red Teaming Engine</div>
+        <div class="items">
+          <div class="item"><b>5,000+ prebuilt attack simulations</b> — purpose-built and domain-specific</div>
+          <div class="item">Attack types: prompt injection, jailbreak, data poisoning, tool abuse, model confusion, hallucination induction</div>
+          <div class="item"><b>Multi-modal testing:</b> text, voice, images, documents</div>
+          <div class="item"><b>AI red teaming for MCP servers</b> <span class="badge b-new">NEW Jun 2026</span></div>
+          <div class="item">Custom probe creation — upload your own attack datasets</div>
+          <div class="item">Powered by OpenAI GPT-5.4-Cyber for sophisticated attack generation</div>
+          <div class="item">Tests commercial and open-source LLMs — benchmark for model selection</div>
+          <div class="item">Agentic Radar — open-source scanner for agentic AI workflows</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-orange">🔒 Prompt Hardening Service <span class="badge b-new">Now Standalone</span></div>
+        <div class="items">
+          <div class="item">Automatically hardens system prompts based on red team findings</div>
+          <div class="item">Reduces exploitable prompt attack surface by <b>up to 95%</b> (SPLX data)</div>
+          <div class="item">Dynamic hardening — updates as new attack patterns emerge</div>
+          <div class="item">Now available as standalone service (was bundled with red team only)</div>
+          <div class="item">LLM log scanning — detects jailbreaks and injections in near real-time from existing logs</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-orange">🏭 Policy Generator <span class="badge b-key">Market-First</span></div>
+        <div class="items">
+          <div class="item">Auto-generates runtime guardrail policies from red team findings</div>
+          <div class="item"><b>Output targets:</b> Zscaler AI Guard policies, AWS Bedrock guardrails</div>
+          <div class="item">Domain-specific and fine-tuned per customer's AI app context</div>
+          <div class="item">Closes the loop: red team → policy → enforcement → re-test</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-orange">📊 Compliance Heat Maps <span class="badge b-new">NEW Jun 2026</span></div>
+        <div class="items">
+          <div class="item">Visual mapping of red team findings → compliance framework gaps</div>
+          <div class="item"><b>Frameworks:</b> EU AI Act, NIST AI RMF, OWASP LLM Top 10, MITRE ATLAS, ISO/IEC 42001</div>
+          <div class="item">Custom policy creation and import for internal standards</div>
+          <div class="item">Produces audit evidence of pre-production AI security testing</div>
+          <div class="item">Board/CISO-level reporting on AI security posture</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-orange">🔄 CI/CD &amp; Remediation Integration</div>
+        <div class="items">
+          <div class="item"><b>CI/CD:</b> GitHub Actions, Jenkins — security scan as a pipeline gate</div>
+          <div class="item">Pass/fail on expected actions (ALLOW/BLOCK/DETECT) per test prompt</div>
+          <div class="item">Optional probes — warn without failing the build</div>
+          <div class="item"><b>ITSM:</b> Jira and ServiceNow for remediation workflow tracking</div>
+          <div class="item">Scan on: config/script changes, model updates, or manual dispatch</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-orange">🏗 Runtime Guardrails (from Red Teaming)</div>
+        <div class="items">
+          <div class="item">Enforces input/output guardrails in live AI deployments</div>
+          <div class="item">Detects malicious behavior, prompt injections, sensitive data leakage at runtime</div>
+          <div class="item">Feeds findings back into Policy Generator for AI Guard policy updates</div>
+          <div class="item">Deep visibility within development environments</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     NEW — AGENTIC AI SECURITY (JUN 2026)
+════════════════════════════════════════════════════ -->
+<div class="section s-pink" style="margin-bottom:16px;">
+  <div class="sec-head sh-pink">
+    <span class="sec-icon">🤖</span>
+    <span class="sec-title">NEW PRODUCTS &nbsp;·&nbsp; Agentic AI Security Layer (Zenith Live, Jun 9 2026)</span>
+    <span class="sec-badge sb-pink">BRAND NEW · INDUSTRY-FIRST ZT FOR AGENTS</span>
+  </div>
+  <div class="sec-body">
+    <div class="ig3">
+
+      <div class="mod">
+        <div class="mod-title t-pink">🔀 AI Broker <span class="badge b-new">NEW PRODUCT</span></div>
+        <div class="items">
+          <div class="item">Secures <b>MCP</b> (Model Context Protocol) communications between agents and tools</div>
+          <div class="item">Secures <b>A2A</b> (Agent-to-Agent) communications</div>
+          <div class="item"><b>Agent Registry:</b> inventory of every agent + fine-grained access policy per agent before it runs</div>
+          <div class="item">Enforces least-privilege per agent identity</div>
+          <div class="item">Ecosystem partners: Zendesk, n8n, Kore.ai — native compatibility</div>
+          <div class="item">Works alongside AWS Bedrock, Google Cloud, Microsoft agent platforms</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-pink">💻 Endpoint AI Security <span class="badge b-new">NEW PRODUCT</span></div>
+        <div class="items">
+          <div class="item">Detects AI-related threats on employee devices</div>
+          <div class="item">Covers <b>browsers, plugins, extensions</b> — layer traditional EDRs miss</div>
+          <div class="item">Detects <b>local AI tools</b> (Ollama, local LLMs) — invisible to inline ZIA inspection</div>
+          <div class="item">Enforces AI policies down to the endpoint layer</div>
+          <div class="item">Extends AI Asset Management visibility to endpoints</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-pink">🗺 AI Access Graph <span class="badge b-new">NEW PRODUCT</span></div>
+        <div class="items">
+          <div class="item">Maps: <b>identities ↔ agents ↔ apps ↔ models ↔ data sources</b></div>
+          <div class="item">Powered by Symmetry Systems acquisition (May 2026)</div>
+          <div class="item">Real-time data lineage tracking across every AI channel</div>
+          <div class="item">Enforces tighter access policies by exposing unnecessary connections</div>
+          <div class="item">Answers: <i>"Which agent accessed what data, via which path, at what time?"</i></div>
+          <div class="item">Reduces unnecessary access privileges and tracks data lineage at scale</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     CROSS-CUTTING — GOVERNANCE & INTEGRATIONS
+════════════════════════════════════════════════════ -->
+<div class="section s-gray" style="margin-bottom:16px;">
+  <div class="sec-head sh-gray">
+    <span class="sec-icon">⚖️</span>
+    <span class="sec-title">CROSS-CUTTING &nbsp;·&nbsp; AI Governance, Compliance &amp; Ecosystem Integrations</span>
+    <span class="sec-badge sb-gray">SPANS ALL PILLARS</span>
+  </div>
+  <div class="sec-body">
+    <div class="ig3">
+
+      <div class="mod">
+        <div class="mod-title t-gray">📜 Regulatory Framework Alignment</div>
+        <div class="items">
+          <div class="item"><b>EU AI Act</b> — risk classification, documentation, human oversight requirements</div>
+          <div class="item"><b>NIST AI RMF 600-1</b> — govern, map, measure, manage AI risks</div>
+          <div class="item"><b>ISO/IEC 42001</b> — AI management system standard</div>
+          <div class="item"><b>OWASP LLM Top 10</b> — prompt injection, data leakage, insecure plugin design</div>
+          <div class="item"><b>MITRE ATLAS</b> — adversarial ML threat matrix</div>
+          <div class="item"><b>HIPAA / GDPR / CCPA</b> — data protection regulations</div>
+          <div class="item">Compliance heat maps from red team findings (Jun 2026)</div>
+          <div class="item">Continuous posture monitoring with drift alerts</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-gray">🪤 AI Deception <span class="badge b-new">NEW</span></div>
+        <div class="items">
+          <div class="item">Decoy / honeypot layer that diverts model-based attacks</div>
+          <div class="item">Neutralizes adversarial inputs before they reach real models</div>
+          <div class="item">Detects reconnaissance, probing, and adversarial scanning activity</div>
+          <div class="item">Generates intelligence on attacker techniques and targets</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-gray">🔗 Ecosystem Integrations</div>
+        <div class="items">
+          <div class="item"><b>LLM providers:</b> OpenAI, Anthropic, AWS, Microsoft Azure, Google Cloud</div>
+          <div class="item"><b>ITSM:</b> Jira, ServiceNow — issue tracking + remediation workflow</div>
+          <div class="item"><b>SIEM / Log:</b> Splunk, CrowdStrike, ADX Event Hub, AWS S3</div>
+          <div class="item"><b>DSPM / DLP:</b> Native Zscaler data security platform integration</div>
+          <div class="item"><b>AI Gateways:</b> LiteLLM, Portkey, Kong, Azure APIM, Apigee</div>
+          <div class="item"><b>IDEs / Agents:</b> Claude Code, Cursor, Cline, Windsurf, GitHub Copilot</div>
+          <div class="item"><b>Workflow:</b> n8n, TrueFoundry, NeMo Guardrails</div>
+          <div class="item"><b>GSI partners:</b> Wipro (AI-Guardian program, May 2026)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     QUICK REFERENCE — DEPLOYMENT MATRIX
+════════════════════════════════════════════════════ -->
+<div class="section s-blue" style="margin-bottom:4px;">
+  <div class="sec-head sh-blue">
+    <span class="sec-icon">📐</span>
+    <span class="sec-title">QUICK REFERENCE &nbsp;·&nbsp; Deployment &amp; Pre-Sales Decision Matrix</span>
+    <span class="sec-badge sb-blue">SE CHEAT SHEET</span>
+  </div>
+  <div class="sec-body">
+    <div class="ig2">
+
+      <div class="mod">
+        <div class="mod-title t-blue">Customer Scenario → Which Module</div>
+        <div class="items">
+          <div class="item">🙋 <b>Employees using ChatGPT / Copilot / Gemini</b> → AI Guard Proxy via ZIA (ZCC already in place)</div>
+          <div class="item">🏗 <b>Building internal AI chatbot on Azure OpenAI / Bedrock</b> → AI Guard DaaS API (dev integration)</div>
+          <div class="item">👁 <b>"We don't know what AI tools our employees use"</b> → AI Asset Management (inline traffic + SaaS CASB)</div>
+          <div class="item">☁️ <b>Running AI models/agents in AWS/Azure/GCP</b> → AI Asset Management (cloud account onboarding)</div>
+          <div class="item">🧑‍💻 <b>Dev team building LLM apps, needs pre-prod testing</b> → Red Teaming (SPLX) + Prompt Hardening</div>
+          <div class="item">🤖 <b>Deploying AI agents across business workflows</b> → AI Broker + AI Access Graph + Agent Registry</div>
+          <div class="item">💻 <b>Shadow AI on employee laptops (local LLMs, browser plugins)</b> → Endpoint AI Security</div>
+          <div class="item">📋 <b>EU AI Act / NIST AI RMF compliance requirement</b> → Red Teaming Compliance Heat Maps + AI Posture Policies</div>
+        </div>
+      </div>
+
+      <div class="mod">
+        <div class="mod-title t-blue">Effort by Module (ZIA Customer Baseline)</div>
+        <div class="items">
+          <div class="item">🟢 <b>AI Guard (user → GenAI)</b> — Low: ZIA proxy-chain config, no new agent</div>
+          <div class="item">🟡 <b>AI Guard DaaS (internal app)</b> — Medium: dev team SDK integration required</div>
+          <div class="item">🟢 <b>AI Asset Mgmt (inline traffic)</b> — Very low: rides existing ZIA + SSL inspection</div>
+          <div class="item">🟡 <b>AI Asset Mgmt (SaaS embedded AI)</b> — Low-medium: needs CASB API connector</div>
+          <div class="item">🟡 <b>AI Asset Mgmt (cloud agents/models)</b> — Medium: cloud connector / IAM setup</div>
+          <div class="item">🟢 <b>AI Asset Mgmt (endpoints + local AI)</b> — Low if ZCC already deployed</div>
+          <div class="item">🟡 <b>AI Asset Mgmt (code repos)</b> — Medium: GitHub/GitLab connector setup</div>
+          <div class="item">🔴 <b>Red Teaming</b> — Medium-high: dev/AppSec team must point LLM endpoint to SPLX</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="footnote">
+  Sources: Zscaler Help Portal (ai-asset-mgmt), AI Guard docs, Zenith Live Jun 2026 announcements, SPLX + Symmetry acquisitions &nbsp;·&nbsp;
+  Verified against help.zscaler.com navigation tree &nbsp;·&nbsp; Last reviewed Jun 18, 2026
+</div>
+
+</body>
+</html>
